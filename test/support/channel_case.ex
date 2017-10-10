@@ -28,9 +28,14 @@ defmodule CookyWeb.ChannelCase do
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Cooky.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Cooky.Repo, {:shared, self()})
     end
+
+#    :ok = Supervisor.terminate_child(Cooky.Supervisor, Cooky.Chef)
+#    {:ok, _} = Supervisor.restart_child(Cooky.Supervisor, Cooky.Chef)
+
     :ok
   end
 

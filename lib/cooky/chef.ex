@@ -72,4 +72,16 @@ defmodule Cooky.Chef do
   def handle_call({:reset, ingredients}, _from, _state) do
     {:reply, :ok, State.init(ingredients)}
   end
+
+  def all_ingridients do
+    Cooking.all_ingredients()
+  end
+
+  def all_ingridients_in_gc do
+    GenServer.call(__MODULE__, :all_ingridients_in_gc)
+  end
+
+  def handle_call(:all_ingridients_in_gc, _from, state) do
+    {:reply, Cooking.all_ingredients(), state}
+  end
 end
